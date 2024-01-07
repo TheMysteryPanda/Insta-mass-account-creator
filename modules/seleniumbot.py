@@ -20,6 +20,7 @@ from selenium.webdriver.common.by import By
 import imaplib
 import time
 import random
+from fake_useragent import UserAgent
 import requests
 import re
 import logging
@@ -77,9 +78,10 @@ def get_ig_code(driver, accountname):
 
         for letter in subject_text:
             action.send_keys(letter).perform()
-            action.send_keys(Keys.TAB).send_keys(Keys.ENTER).perform()
             time.sleep(0.2) 
-
+            
+        # Hit continue button
+        action.send_keys(Keys.TAB).send_keys(Keys.ENTER).perform()
     except:
         print(f"IG CODE - ERROR", accountname)
         driver.close()
@@ -108,11 +110,14 @@ class AccountCreator():
         chrome_options = webdriver.ChromeOptions()
         if proxy != None:
             chrome_options.add_argument('--proxy-server=%s' % proxy)
+            
+        ua = UserAgent()
+        user_agent = ua.random
 
         # chrome_options.add_argument('headless')
         # ua = UserAgent()
         # user_agent = ua.random
-        chrome_options.add_argument('--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.80 Safari/537.36"')
+        chrome_options.add_argument(f"user-agent={user_agent}")
         # chrome_options.add_argument("--incognito")
         chrome_options.add_argument('window-size=1200x600')
         driver = uc.Chrome(chrome_options=chrome_options)
@@ -122,10 +127,12 @@ class AccountCreator():
         print('Browser Opened')
         sleep(5)
 
-
-
-
         action_chains = ActionChains(driver)
+        
+        # Click the cookie button
+        cookies_button = driver.find_element(By.XPATH, "//button[contains(.,'Alle Cookies erlauben')]")
+        driver.execute_script("arguments[0].click();", cookies_button)
+
         sleep(5)
         account_info = accnt.new_account()
 
@@ -169,38 +176,51 @@ class AccountCreator():
 
         try:
             submit = driver.find_element(By.XPATH,
-                '//*[@id="react-root"]/section/main/div/div/div[1]/div/form/div[7]/div/button')
+                "//button[@type='submit']")
 
-            action_chains.move_to_element(submit)
+            driver.execute_script("arguments[0].click();", submit)
 
             sleep(2)
-            submit.click()
         except:
             input("PLEASE MANUALLY SUBMIT THIS FORM AND HIT ENTER")
         sleep(3)
         try:
 
-            month_button = driver.find_element(By.XPATH, '//*[@id="react-root"]/section/main/div/div/div[1]/div/div[4]/div/div/span/span[1]/select')
-            month_button.click()
+            month_button = driver.find_element(By.XPATH, "//select")
+            driver.execute_script("arguments[0].click();", month_button)
+
             month_button.send_keys(account_info["birthday"].split(" ")[0])
             sleep(1)
-            day_button = driver.find_element(By.XPATH,'//*[@id="react-root"]/section/main/div/div/div[1]/div/div[4]/div/div/span/span[2]/select')
-            day_button.click()
-            day_button.send_keys(account_info["birthday"].split[" "][1][:-1])
+            action_chains.send_keys(Keys.TAB).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).perform()
+            action_chains.send_keys(Keys.TAB).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).perform()
+            
+            #day_button = driver.find_element(By.XPATH, "//span[2]/select")
+            #driver.execute_script("arguments[0].click();", day_button)
+
+            #day_button.send_keys(account_info["birthday"].split[" "][1][:-1])
             sleep(1)
-            year_button = driver.find_element(By.XPATH,'//*[@id="react-root"]/section/main/div/div/div[1]/div/div[4]/div/div/span/span[3]/select')
-            year_button.click()
-            year_button.send_keys(account_info["birthday"].split[" "][2])
+            #year_button = driver.find_element(By.XPATH, "//span[3]/select")
+            #driver.execute_script("arguments[0].click();", year_button)
+            #year_button.send_keys(account_info["birthday"].split[" "][2])
 
             sleep(2)
-            next_button = driver.find_elements_by_xpath('//*[@id="react-root"]/section/main/div/div/div[1]/div/div[6]/button')
-            next_button.click()
+            submit = driver.find_element(By.XPATH,
+                "//button[@type='submit']")
+
+            driver.execute_script("arguments[0].click();", submit)
 
         except Exception as e :
             input("PLEASE MANUALLY SUBMIT THIS FORM AND HIT ENTER")
 
         get_ig_code(driver, account_info["email"])
-        sleep(4)
+        input("Account successfully created. Hit Enter to continue...")
+        
+        driver.get("https://www.instagram.com/tobiiodaasoo")
+        try:
+            follow_button = driver.find_element(By.XPATH, "//div[contains(.,'Folgen')]")
+            driver.execute_script("arguments[0].click();", follow_button)
+        except:
+            input("Couldn't click Follow Button")
         # After the first fill save the account account_info
         store(account_info)
         
