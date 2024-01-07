@@ -130,11 +130,13 @@ class AccountCreator():
         sleep(5)
 
         action_chains = ActionChains(driver)
-        
-        # Click the cookie button
-        cookies_button = driver.find_element(By.XPATH, "//button[contains(.,'Alle Cookies erlauben')]")
-        driver.execute_script("arguments[0].click();", cookies_button)
-
+        try:
+            # Click the cookie button
+            cookies_button = driver.find_element(By.XPATH, "//button[contains(.,'Alle Cookies erlauben')]")
+            driver.execute_script("arguments[0].click();", cookies_button)
+        except:
+            print("Error accepting cookies")
+            
         sleep(5)
         account_info = accnt.new_account()
 
@@ -193,17 +195,15 @@ class AccountCreator():
 
             month_button.send_keys(account_info["birthday"].split(" ")[0])
             sleep(1)
-            action_chains.send_keys(Keys.TAB).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).perform()
-            action_chains.send_keys(Keys.TAB).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).send_keys(Keys.ARROW_DOWN).perform()
-            
-            #day_button = driver.find_element(By.XPATH, "//span[2]/select")
-            #driver.execute_script("arguments[0].click();", day_button)
 
-            #day_button.send_keys(account_info["birthday"].split[" "][1][:-1])
+            day_button = driver.find_element(By.XPATH, "//span[2]/select")
+            driver.execute_script("arguments[0].click();", day_button)
+
+            day_button.send_keys(account_info["birthday"].split[" "][1][:-1])
             sleep(1)
-            #year_button = driver.find_element(By.XPATH, "//span[3]/select")
-            #driver.execute_script("arguments[0].click();", year_button)
-            #year_button.send_keys(account_info["birthday"].split[" "][2])
+            year_button = driver.find_element(By.XPATH, "//span[3]/select")
+            driver.execute_script("arguments[0].click();", year_button)
+            year_button.send_keys(account_info["birthday"].split[" "][2])
 
             sleep(2)
             submit = driver.find_element(By.XPATH,
