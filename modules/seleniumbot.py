@@ -115,12 +115,16 @@ class AccountCreator():
         user_agent = ua.random
         print(f"Using User-Agent: {user_agent}")
 
-        # chrome_options.add_argument('headless')
-        # ua = UserAgent()
-        # user_agent = ua.random
-        chrome_options.add_argument(f"user-agent={user_agent}")
-        # chrome_options.add_argument("--incognito")
+        
+        ua = UserAgent()
+        user_agent = ua.random
+        chrome_options.add_argument('--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.80 Safari/537.36"')
+        chrome_options.add_argument("--headless=new")
+        chrome_options.add_argument("--no-sandbox")
+
+                # chrome_options.add_argument("--incognito")
         chrome_options.add_argument('window-size=1200x600')
+        #driver = webdriver.Remote(command_executor='http://45.13.59.173:4444', options=chrome_options)
         driver = uc.Chrome(chrome_options=chrome_options)
 
         print('Opening Browser')
