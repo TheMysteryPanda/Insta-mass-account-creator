@@ -136,7 +136,7 @@ class AccountCreator():
         action_chains = ActionChains(driver)
         try:
             # Click the cookie button
-            cookies_button = driver.find_element(By.XPATH, "//button[contains(.,'Alle Cookies erlauben')]")
+            cookies_button = driver.find_element(By.XPATH, "//button[contains(.,'Allow all cookies')]")
             driver.execute_script("arguments[0].click();", cookies_button)
         except:
             print("Error accepting cookies")
