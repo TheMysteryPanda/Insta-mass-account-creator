@@ -13,7 +13,8 @@ from modules.storeusernametofirebase import storeinfirebase
 #library import 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys # and Krates
-
+import undetected_chromedriver as uc
+from selenium.webdriver.common.by import By
 
 def create_account():
     try:
@@ -31,23 +32,23 @@ def create_account():
             
 
             #fill the email value
-            email_field = driver.find_element_by_name('emailOrPhone')
+            email_field = driver.find_element(By.NAME,'emailOrPhone')
             email_field.send_keys(accnt.genEmail())
 
             #fill the fullname value
-            fullname_field = driver.find_element_by_name('fullName')
+            fullname_field = driver.find_element(By.NAME,'fullName')
             fullname_field.send_keys(accnt.genName())
 
             #fill username value
-            username_field = driver.find_element_by_name('username')
+            username_field = driver.find_element(By.NAME,'username')
             username_field.send_keys(name)
 
             #fill password value
-            password_field  = driver.find_element_by_name('password')
+            password_field  = driver.find_element(By.NAME,'password')
             passW = accnt.generatePassword() 
             password_field.send_keys(passW)
 
-            submit = driver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[6]/span/button')
+            submit = driver.find_element(By.XPATH,'//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[6]/span/button')
             submit.click()
 
             print('Registering....')
@@ -81,23 +82,23 @@ def create_account():
                             name = accnt.username()
                             
                             #fill the email value
-                            email_field = driver.find_element_by_name('emailOrPhone')
+                            email_field = driver.find_element(By.NAME,'emailOrPhone')
                             email_field.send_keys(accnt.genEmail())
 
                             #fill the fullname value
-                            fullname_field = driver.find_element_by_name('fullName')
+                            fullname_field = driver.find_element(By.NAME,'fullName')
                             fullname_field.send_keys(accnt.genName())
 
                             #fill username value
-                            username_field = driver.find_element_by_name('username')
+                            username_field = driver.find_element(By.NAME,'username')
                             username_field.send_keys(name)
 
                             #fill password value
-                            password_field  = driver.find_element_by_name('password')
+                            password_field  = driver.find_element(By.NAME,'password')
                             passW = accnt.generatePassword() 
                             password_field.send_keys(passW)
 
-                            submit = driver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[6]/span/button')
+                            submit = driver.find_element(By.XPATH,'//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[6]/span/button')
                             submit.click()
 
                             print('Registering....')
@@ -118,23 +119,23 @@ def create_account():
                             name = accnt.username()
                             
                             #fill the email value
-                            email_field = driver.find_element_by_name('emailOrPhone')
+                            email_field = driver.find_element(By.NAME,'emailOrPhone')
                             email_field.send_keys(accnt.genEmail())
 
                             #fill the fullname value
-                            fullname_field = driver.find_element_by_name('fullName')
+                            fullname_field = driver.find_element(By.NAME,'fullName')
                             fullname_field.send_keys(accnt.genName())
 
                             #fill username value
-                            username_field = driver.find_element_by_name('username')
+                            username_field = driver.find_element(By.NAME,'username')
                             username_field.send_keys(name)
 
                             #fill password value
-                            password_field  = driver.find_element_by_name('password')
+                            password_field  = driver.find_element(By.NAME,'password')
                             passW = accnt.generatePassword() 
                             password_field.send_keys(passW)
 
-                            submit = driver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[6]/span/button')
+                            submit = driver.find_element(By.XPATH,'//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[6]/span/button')
                             submit.click()
 
                             print('Registering....')
