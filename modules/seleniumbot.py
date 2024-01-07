@@ -113,6 +113,7 @@ class AccountCreator():
             
         ua = UserAgent()
         user_agent = ua.random
+        print(f"Using User-Agent: {user_agent}")
 
         # chrome_options.add_argument('headless')
         # ua = UserAgent()
@@ -121,6 +122,7 @@ class AccountCreator():
         # chrome_options.add_argument("--incognito")
         chrome_options.add_argument('window-size=1200x600')
         driver = uc.Chrome(chrome_options=chrome_options)
+
         print('Opening Browser')
         driver.get(self.url)
 
