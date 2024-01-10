@@ -36,7 +36,6 @@ def get_ig_code(driver, accountname):
     Open the temporary mail.
     """
 
-    time.sleep(random.randint(10, 15))
 
     action = ActionChains(driver)
    
@@ -136,7 +135,7 @@ class AccountCreator():
         action_chains = ActionChains(driver)
         try:
             # Click the cookie button
-            cookies_button = driver.find_element(By.XPATH, "//button[contains(.,'Allow all cookies')]")
+            cookies_button = driver.find_element(By.XPATH, "//button[contains(.,'Alle Cookies erlauben')]")
             driver.execute_script("arguments[0].click();", cookies_button)
         except:
             print("Error accepting cookies")
